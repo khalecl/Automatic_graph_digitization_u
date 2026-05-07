@@ -1,4 +1,4 @@
-﻿window.App = window.App || {};
+window.App = window.App || {};
 
 window.App.app_js = (function() {
   let state = {
