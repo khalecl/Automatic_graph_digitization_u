@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Graph Data Extractor</h1>
-
+        
         <!-- Upload Section -->
         <div class="upload-area" id="drop-zone">
             <h2>Upload Graph Image</h2>
@@ -62,14 +62,14 @@
     <script>
         // Final initialization
         document.addEventListener('DOMContentLoaded', function() {
-        window.App.app_js.init();
+            window.App.app_js.init();
+            
+            // Register all modules
+            if (window.App.graph_detector_js) window.App.app_js.registerModule('graph_detector_js', window.App.graph_detector_js);
+            if (window.App.upload_js) window.App.app_js.registerModule('upload_js', window.App.upload_js);
+            // ... register others as needed
 
-        // Register all modules
-        if (window.App.graph_detector_js) window.App.app_js.registerModule('graph_detector_js', window.App.graph_detector_js);
-        if (window.App.upload_js) window.App.app_js.registerModule('upload_js', window.App.upload_js);
-        // ... register others as needed
-
-        console.log('✅ All modules initialized');
+            console.log('✅ All modules initialized');
         });
     </script>
 </body>
