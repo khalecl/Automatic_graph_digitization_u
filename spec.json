@@ -1,0 +1,32 @@
+{
+  "goal": "Automatic graph digitization - upload image of chart/graph, extract data points automatically, export to CSV with adjustable point density",
+  "inputs": {
+    "format": "image (PNG, JPG, SVG)",
+    "example": "screenshot of line graph or chart",
+    "size_estimate": "under 10MB"
+  },
+  "outputs": {
+    "format": "CSV, JSON",
+    "example": "x,y data points"
+  },
+  "core_operations": [
+    "upload image",
+    "auto-detect graph lines",
+    "manual axis calibration (click corners + enter axis values)",
+    "extract data points",
+    "adjust point count via slider",
+    "export to CSV/JSON",
+    "replot graph in different styles (line, bar, scatter, area)",
+    "view/edit data points individually",
+    "preview reconstructed graph",
+    "detect multiple lines as separate series"
+  ],
+  "constraints": {
+    "libraries_allowed": "",
+    "performance": ""
+  },
+  "non_goals": [],
+  "acceptance_criteria": [],
+  "target_type": "webapp",
+  "style_brief": "clean, modern, data-tool aesthetic - dark mode friendly, clear upload area, interactive graph preview"
+}

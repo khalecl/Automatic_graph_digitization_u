@@ -1,0 +1,251 @@
+{
+  "summary": "Modular web app for automatic graph digitization with image upload, auto-detection, manual calibration, data extraction, and CSV/JSON export.",
+  "modules": [
+    {
+      "id": "index_html",
+      "name": "index.html",
+      "kind": "html",
+      "purpose": "Main entry point; loads all assets and initializes the app.",
+      "public_api": [],
+      "depends_on": [
+        "styles_css",
+        "app_js",
+        "upload_js",
+        "graph_detector_js",
+        "calibration_js",
+        "data_extractor_js",
+        "export_js",
+        "preview_js"
+      ],
+      "notes": "References styles.css, app.js, and all other JS modules. Contains main layout with upload area, graph preview, and controls."
+    },
+    {
+      "id": "styles_css",
+      "name": "styles.css",
+      "kind": "css",
+      "purpose": "Global styles for the app, including dark mode, layout, and interactive elements.",
+      "public_api": [],
+      "depends_on": [],
+      "notes": "Defines styles for upload area, graph preview, sliders, buttons, and data tables."
+    },
+    {
+      "id": "app_js",
+      "name": "app.js",
+      "kind": "js",
+      "purpose": "Core app initialization and state management.",
+      "public_api": [
+        {
+          "name": "init",
+          "signature": "init()",
+          "description": "Initializes the app, sets up event listeners, and loads initial state."
+        },
+        {
+          "name": "getState",
+          "signature": "getState()",
+          "description": "Returns the current state of the app."
+        },
+        {
+          "name": "setState",
+          "signature": "setState(key: string, value: any)",
+          "description": "Updates the app state and triggers necessary updates."
+        }
+      ],
+      "depends_on": [],
+      "notes": "Manages shared state and coordinates between modules."
+    },
+    {
+      "id": "upload_js",
+      "name": "upload.js",
+      "kind": "js",
+      "purpose": "Handles image upload and validation.",
+      "public_api": [
+        {
+          "name": "setupUpload",
+          "signature": "setupUpload()",
+          "description": "Sets up the upload button and drop zone event listeners."
+        },
+        {
+          "name": "handleImageUpload",
+          "signature": "handleImageUpload(file: File)",
+          "description": "Processes the uploaded image and updates the state."
+        }
+      ],
+      "depends_on": [
+        "app_js"
+      ],
+      "notes": "Validates image format and size, then passes the image to the graph detector."
+    },
+    {
+      "id": "graph_detector_js",
+      "name": "graph_detector.js",
+      "kind": "js",
+      "purpose": "Auto-detects graph lines and axes from the uploaded image.",
+      "public_api": [
+        {
+          "name": "detectGraph",
+          "signature": "detectGraph(imageData: ImageData)",
+          "description": "Analyzes the image to detect graph lines and axes."
+        },
+        {
+          "name": "getDetectedLines",
+          "signature": "getDetectedLines()",
+          "description": "Returns the detected lines and axes."
+        }
+      ],
+      "depends_on": [
+        "app_js"
+      ],
+      "notes": "Uses image processing to identify lines and axes, then passes data to calibration module."
+    },
+    {
+      "id": "calibration_js",
+      "name": "calibration.js",
+      "kind": "js",
+      "purpose": "Handles manual axis calibration via user input.",
+      "public_api": [
+        {
+          "name": "setupCalibration",
+          "signature": "setupCalibration()",
+          "description": "Sets up calibration UI and event listeners."
+        },
+        {
+          "name": "calibrateAxes",
+          "signature": "calibrateAxes(points: Array<{x: number, y: number}>, axisValues: {x: {min: number, max: number}, y: {min: number, max: number}})",
+          "description": "Calibrates the axes based on user input."
+        }
+      ],
+      "depends_on": [
+        "app_js",
+        "graph_detector_js"
+      ],
+      "notes": "Allows users to click axis corners and input values, then updates the state."
+    },
+    {
+      "id": "data_extractor_js",
+      "name": "data_extractor.js",
+      "kind": "js",
+      "purpose": "Extracts data points from the calibrated graph.",
+      "public_api": [
+        {
+          "name": "extractDataPoints",
+          "signature": "extractDataPoints(pointDensity: number)",
+          "description": "Extracts data points based on the calibrated graph and point density."
+        },
+        {
+          "name": "getDataPoints",
+          "signature": "getDataPoints()",
+          "description": "Returns the extracted data points."
+        }
+      ],
+      "depends_on": [
+        "app_js",
+        "calibration_js"
+      ],
+      "notes": "Uses the calibrated axes to extract data points and allows adjusting point density."
+    },
+    {
+      "id": "export_js",
+      "name": "export.js",
+      "kind": "js",
+      "purpose": "Handles exporting data to CSV or JSON.",
+      "public_api": [
+        {
+          "name": "exportToCSV",
+          "signature": "exportToCSV(data: Array<{x: number, y: number}>)",
+          "description": "Exports data points to a CSV file."
+        },
+        {
+          "name": "exportToJSON",
+          "signature": "exportToJSON(data: Array<{x: number, y: number}>)",
+          "description": "Exports data points to a JSON file."
+        }
+      ],
+      "depends_on": [
+        "app_js",
+        "data_extractor_js"
+      ],
+      "notes": "Generates downloadable CSV or JSON files from the extracted data."
+    },
+    {
+      "id": "preview_js",
+      "name": "preview.js",
+      "kind": "js",
+      "purpose": "Renders a preview of the extracted data in different graph styles.",
+      "public_api": [
+        {
+          "name": "renderPreview",
+          "signature": "renderPreview(data: Array<{x: number, y: number}>, style: string)",
+          "description": "Renders a preview of the data in the specified style (line, bar, scatter, area)."
+        },
+        {
+          "name": "updatePreview",
+          "signature": "updatePreview()",
+          "description": "Updates the preview based on the current state."
+        }
+      ],
+      "depends_on": [
+        "app_js",
+        "data_extractor_js"
+      ],
+      "notes": "Uses canvas or SVG to render the graph preview dynamically."
+    }
+  ],
+  "entry_point": "index.html",
+  "cdn_libraries": [],
+  "shared_state": {
+    "uploadedImage": "The uploaded image data.",
+    "detectedLines": "Detected graph lines and axes.",
+    "calibratedAxes": "Calibrated axis values.",
+    "dataPoints": "Extracted data points.",
+    "pointDensity": "Current point density setting.",
+    "graphStyle": "Current graph style for preview."
+  },
+  "data_flow": [
+    {
+      "from": "upload_js",
+      "to": "graph_detector_js",
+      "data": "uploadedImage"
+    },
+    {
+      "from": "graph_detector_js",
+      "to": "calibration_js",
+      "data": "detectedLines"
+    },
+    {
+      "from": "calibration_js",
+      "to": "data_extractor_js",
+      "data": "calibratedAxes"
+    },
+    {
+      "from": "data_extractor_js",
+      "to": "export_js",
+      "data": "dataPoints"
+    },
+    {
+      "from": "data_extractor_js",
+      "to": "preview_js",
+      "data": "dataPoints"
+    },
+    {
+      "from": "app_js",
+      "to": "data_extractor_js",
+      "data": "pointDensity"
+    },
+    {
+      "from": "app_js",
+      "to": "preview_js",
+      "data": "graphStyle"
+    }
+  ],
+  "build_order": [
+    "styles_css",
+    "app_js",
+    "upload_js",
+    "graph_detector_js",
+    "calibration_js",
+    "data_extractor_js",
+    "export_js",
+    "preview_js",
+    "index_html"
+  ]
+}

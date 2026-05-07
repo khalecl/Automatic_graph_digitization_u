@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Graph Data Extractor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Graph Data Extractor</h1>
+        </header>
+        <main class="app-main">
+            <section class="upload-area">
+                <h2>Upload Graph Image</h2>
+                <div class="upload-zone" id="uploadZone">
+                    <p>Drag & drop an image here or click to browse</p>
+                    <input type="file" id="fileInput" accept="image/*">
+                </div>
+                <div class="upload-preview" id="uploadPreview"></div>
+            </section>
+            <section class="controls">
+                <div class="control-group">
+                    <label for="pointDensity">Point Density:</label>
+                    <input type="range" id="pointDensity" min="1" max="100" value="50">
+                </div>
+                <div class="control-group">
+                    <label for="graphStyle">Graph Style:</label>
+                    <select id="graphStyle">
+                        <option value="line">Line Graph</option>
+                        <option value="scatter">Scatter Plot</option>
+                    </select>
+                </div>
+                <button id="calibrateBtn">Calibrate Axes</button>
+                <button id="extractBtn">Extract Data</button>
+                <button id="exportBtn">Export Data</button>
+            </section>
+            <section class="graph-preview">
+                <h2>Graph Preview</h2>
+                <div class="preview-container" id="previewContainer"></div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+    <script src="upload.js"></script>
+    <script src="graph_detector.js"></script>
+    <script src="calibration.js"></script>
+    <script src="data_extractor.js"></script>
+    <script src="export.js"></script>
+    <script src="preview.js"></script>
+</body>
+</html>
