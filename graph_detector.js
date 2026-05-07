@@ -49,8 +49,3 @@ window.App.graph_detector_js = (function() {
         getDetectedLines: getDetectedLines
     };
 })();
-
-// Initialize if needed (no DOM interaction)
-if (typeof window.App.app_js !== 'undefined') {
-    window.App.app_js.registerModule('graph_detector_js', window.App.graph_detector_js);
-}

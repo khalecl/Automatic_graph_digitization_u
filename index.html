@@ -2,53 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graph Data Extractor</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app-container">
-        <header class="app-header">
-            <h1>Graph Data Extractor</h1>
-        </header>
-        <main class="app-main">
-            <section class="upload-area">
-                <h2>Upload Graph Image</h2>
-                <div class="upload-zone" id="uploadZone">
-                    <p>Drag & drop an image here or click to browse</p>
-                    <input type="file" id="fileInput" accept="image/*">
-                </div>
-                <div class="upload-preview" id="uploadPreview"></div>
-            </section>
-            <section class="controls">
-                <div class="control-group">
-                    <label for="pointDensity">Point Density:</label>
-                    <input type="range" id="pointDensity" min="1" max="100" value="50">
-                </div>
-                <div class="control-group">
-                    <label for="graphStyle">Graph Style:</label>
-                    <select id="graphStyle">
-                        <option value="line">Line Graph</option>
-                        <option value="scatter">Scatter Plot</option>
-                    </select>
-                </div>
-                <button id="calibrateBtn">Calibrate Axes</button>
-                <button id="extractBtn">Extract Data</button>
-                <button id="exportBtn">Export Data</button>
-            </section>
-            <section class="graph-preview">
-                <h2>Graph Preview</h2>
-                <div class="preview-container" id="previewContainer"></div>
-            </section>
-        </main>
+    <div class="container">
+        <h1>Graph Data Extractor</h1>
+
+        <!-- Upload Section -->
+        <div class="upload-area" id="drop-zone">
+            <h2>Upload Graph Image</h2>
+            <p>Drag & drop an image here or click to browse</p>
+            <input type="file" id="file-input" accept="image/*" style="display:none;">
+            <button id="upload-button" class="button">Choose File</button>
+        </div>
+
+        <div class="graph-preview" id="graph-preview">
+            <h2>Graph Preview</h2>
+            <div id="preview-container"></div>
+        </div>
+
+        <!-- Controls -->
+        <div>
+            <div class="slider-container">
+                <label>Point Density: <span id="density-value">100</span></label>
+                <input type="range" id="density-slider" min="10" max="500" value="100">
+            </div>
+
+            <div>
+                <label>Graph Style:</label>
+                <select id="style-select">
+                    <option value="line">Line Graph</option>
+                    <option value="scatter">Scatter Plot</option>
+                    <option value="bar">Bar Chart</option>
+                    <option value="area">Area Chart</option>
+                </select>
+            </div>
+
+            <button id="calibrate-btn" class="button">Calibrate Axes</button>
+            <button id="extract-btn" class="button">Extract Data</button>
+            <button id="export-csv" class="button">Export CSV</button>
+            <button id="export-json" class="button secondary">Export JSON</button>
+        </div>
+
+        <!-- Calibration UI will be injected here -->
+        <div id="calibration-container"></div>
     </div>
+
+    <!-- Scripts in correct order -->
     <script src="app.js"></script>
     <script src="upload.js"></script>
     <script src="graph_detector.js"></script>
     <script src="calibration.js"></script>
     <script src="data_extractor.js"></script>
-    <script src="export.js"></script>
     <script src="preview.js"></script>
+    <script src="export.js"></script>
+
+    <script>
+        // Final initialization
+        document.addEventListener('DOMContentLoaded', function() {
+        window.App.app_js.init();
+
+        // Register all modules
+        if (window.App.graph_detector_js) window.App.app_js.registerModule('graph_detector_js', window.App.graph_detector_js);
+        if (window.App.upload_js) window.App.app_js.registerModule('upload_js', window.App.upload_js);
+        // ... register others as needed
+
+        console.log('✅ All modules initialized');
+        });
+    </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-window.App = window.App || {};
+﻿window.App = window.App || {};
 
 window.App.app_js = (function() {
   let state = {
@@ -10,31 +10,40 @@ window.App.app_js = (function() {
     graphStyle: 'line'
   };
 
+  const modules = {};
+
   function init() {
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize any DOM-dependent functionality here
-      console.log('App initialized');
-    });
+    console.log('🚀 App core initialized');
+  }
+
+  function registerModule(name, module) {
+    modules[name] = module;
+    console.log(`✅ Module registered: ${name}`);
+  }
+
+  function getModule(name) {
+    return modules[name];
   }
 
   function getState() {
-    return JSON.parse(JSON.stringify(state)); // Return deep copy
+    return JSON.parse(JSON.stringify(state));
   }
 
   function setState(key, value) {
     if (key in state) {
       state[key] = value;
-      // Trigger any necessary updates based on state change
       console.log(`State updated: ${key} =`, value);
+      // You can dispatch events here later for better reactivity
     } else {
       console.warn(`Invalid state key: ${key}`);
     }
   }
 
-  // Public API
   return {
-    init: init,
-    getState: getState,
-    setState: setState
+    init,
+    registerModule,
+    getModule,
+    getState,
+    setState
   };
 })();
